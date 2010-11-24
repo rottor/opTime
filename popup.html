@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title>Time Log</title>
+	<meta charset="UTF-8">
+	<style type="text/css" />
+	 body{ margin: 0; padding: 0; font-family: tahoma, sans-serif; white-space: nowrap; }
+	 h1 {font-size: 12px}
+  </style>
+	
+	<script type="text/javascript">
+	
+	function createTable() 
+	{
+	  var sites = storageToArray();
+	  var table = '<table>';
+	  for (i=0; i < sites.length; i++) 
+	  {        
+		table += '<tr><td>' + (1+i) + ': </td><td>' + sites[i].host + '</td><td>' + timeString( sites[i].time ) + '</td></tr>'; 
+	  } 
+		table += '</table>';
+	  document.getElementById('holder').innerHTML = table;
+	}
+    
+    function storageToArray ()
+    {
+		var arr = new Array(), key;
+		for (i=0; i <= localStorage.length-1; i++) 
+		{ 
+        	try { key = localStorage.key(i); } catch (e) { window.opera.postError("--"+e) } 
+        	arr.push( {host:key, time: localStorage.getItem(key)} );     
+        	
+      	} 
+      	return arr.sort(sortTimeDesc);
+	}
+	
+	function sortTimeDesc(a,b) {
+		return b.time - a.time;
+	}
+    
+    function timeString (ms)
+    {
+	  seconds = Number (ms)/1000;
+	  var nHour = Math.floor(seconds / 3600);
+	  var nMin = Math.floor((seconds - (nHour * 3600))/60);
+	  if (nMin < 10) nMin = '0' + nMin;
+	  return nHour + ':'+ nMin;
+	}
+	
+	
+	
+	</script>
+	
+</head>
+<body onload="createTable()">
+	<h1>Time Log</h1>
+	<div id='holder'>no data yet</div>
+</body>
+</html>
