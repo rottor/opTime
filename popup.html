@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-	<title>Time Log</title>
+	<title>opTimer</title>
 	<meta charset="UTF-8">
 	<style type="text/css" />
 	 body{ margin: 0; padding: 0; font-family: tahoma, sans-serif; white-space: nowrap; }
@@ -38,14 +38,15 @@
 		return b.time - a.time;
 	}
     
+    // bring it out
     function timeString (ms)
     {
-	  seconds = Number (ms)/1000;
-	  var nHour = Math.floor(seconds / 3600);
-	  var nMin = Math.floor((seconds - (nHour * 3600))/60);
-	  if (nMin < 10) nMin = '0' + nMin;
-	  return nHour + ':'+ nMin;
-	}
+  	  seconds = Number (ms)/1000;
+  	  var nHour = Math.floor(seconds / 3600);
+  	  var nMin = Math.floor((seconds - (nHour * 3600))/60);
+  	  if (nMin < 10) nMin = '0' + nMin;
+  	  return nHour + ':'+ nMin;
+	  }
 	
 	
 	
@@ -54,6 +55,6 @@
 </head>
 <body onload="createTable()">
 	<h1>Time Log</h1>
-	<div id='holder'>no data yet</div>
+	<div id='holder'>loading...</div>
 </body>
 </html>

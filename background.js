@@ -72,8 +72,8 @@ window.addEventListener("load", function() {
 function timerTick() 
 {
   var seconds = Math.floor((new Date().getTime() - startTime)/1000);
-  var nHour = Math.round(seconds / 3600);
-  var nMin = Math.round((seconds - (nHour * 3600))/60);
+  var nHour = Math.floor(seconds / 3600);
+  var nMin = Math.floor((seconds - (nHour * 3600))/60);
   if (nMin < 10) nMin = '0' + nMin;
   theButton.badge.textContent = nHour + ':'+ nMin;
 }
