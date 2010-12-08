@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets" id='extensions:otimer'>
-    <name>oTimer</name>
+    <name>opTimer</name>
     <description>Logs the time you spend on each site.</description>
     <author href="http://flash-communist.spb.ru">Yuri K</author>
     <icon src="icons/icon.png"/>

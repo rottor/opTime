@@ -1,5 +1,4 @@
 var startTime = new Date().getTime(); // время запуска отсчета
-var lstorage; // локальное хранилище ?
 var timerInt; // интервал для отсчета
 var theButton; // кнопка расширения
 
