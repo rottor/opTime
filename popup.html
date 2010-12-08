@@ -6,6 +6,7 @@
 	<style type="text/css" />
 	 body{ margin: 0; padding: 0; font-family: tahoma, sans-serif; white-space: nowrap; }
 	 h1 {font-size: 12px}
+	 #hostcell { color:blue; width: 230px; max-width:230px; overflow:hidden; }
   </style>
 	
 	<script type="text/javascript">
@@ -16,7 +17,7 @@
 	  var table = '<table>';
 	  for (i=0; i < sites.length; i++) 
 	  {        
-		table += '<tr><td>' + (1+i) + ': </td><td>' + sites[i].host + '</td><td>' + timeString( sites[i].time ) + '</td></tr>'; 
+		table += '<tr><td>' + (1+i) + ': </td><td id="hostcell">' + link(sites[i].host) + '</td><td>' + timeString( sites[i].time ) + '</td></tr>'; 
 	  } 
 		table += '</table>';
 	  document.getElementById('holder').innerHTML = table;
@@ -37,6 +38,11 @@
 	function sortTimeDesc(a,b) {
 		return b.time - a.time;
 	}
+    
+    function link (host)
+    {
+      return "<a href='http://" + host + "' target='_blank'>" + host + "</a>";
+    }
     
     // bring it out
     function timeString (ms)
