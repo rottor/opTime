@@ -4,4 +4,6 @@
     <description>Logs the time you spend on each site.</description>
     <author href="http://flash-communist.spb.ru">Yuri K</author>
     <icon src="icons/icon.png"/>
+    
+    <preference name="sites" value="10" />
 </widget>

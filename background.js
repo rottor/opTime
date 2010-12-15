@@ -6,20 +6,22 @@ window.addEventListener("load", function() {
     
     var toolbar = opera.contexts.toolbar;
     
+    var pop
+    
     var UIItemProperties = 
     {
         title: "Time Log",
         icon: "icons/small.png",
         badge: {
-    			textContent: '0',
-    			backgroundColor: '#00f',
+    			textContent: '',
+    			backgroundColor: '#d00',
     			color: '#fff',
     			display: 'block'
     		},
     		popup: {
     			href: "popup.html",
     			width: 250,
-    			height: 300
+    			height: (widget.preferences['sites'])? widget.preferences['sites']*20+20 : 300
   			},
   			onclick: function() {
   			  clearInterval(timerInt);
@@ -44,7 +46,7 @@ window.addEventListener("load", function() {
   			 if (timerInt == null)
          timerInt = setInterval(timerTick, 1000);
   			 break;
-  			 
+  			 // TODO: прерывать таймер на блуре
   			case 'blur':
   			 var hostime = (localStorage.getItem(host) != null)? localStorage.getItem(host) : 0;
          hostime = Number(hostime) + (new Date().getTime() - startTime);
