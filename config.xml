@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" id='extensions:otimer'>
-    <name>opTimer</name>
+<widget xmlns="http://www.w3.org/ns/widgets" id='extensions:opTimer' version="0.8">
+    <name short="opTimer">opTimer</name>
     <description>Logs the time you spend on each site.</description>
-    <author href="http://flash-communist.spb.ru">Yuri K</author>
-    <icon src="icons/icon.png"/>
+    <author href="http://haxe.ru">Yuri K</author>
+    <icon src="icons/medium.png"/>
+    <icon src="icons/small.png"/>
+    <icon src="icons/big.png"/>
+    <license>Copyright 2010 Yuri K
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</license>
     
-    <preference name="sites" value="10" />
+    <preference name="sites" value="15" />
 </widget>

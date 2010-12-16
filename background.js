@@ -1,6 +1,6 @@
-var startTime = new Date().getTime(); // время запуска отсчета
-var timerInt; // интервал для отсчета
-var theButton; // кнопка расширения
+var startTime = new Date().getTime(); 
+var timerInt;
+var theButton;
 
 window.addEventListener("load", function() {
     
@@ -34,7 +34,7 @@ window.addEventListener("load", function() {
     // Listen for messages from the UserJS. {event:'', host:''}
     opera.extension.onmessage = function(event)
     {
-  		window.opera.postError('Received message: ' + event.data.event + ' ' + event.data.host);
+  		//window.opera.postError('Received message: ' + event.data.event + ' ' + event.data.host);
   		var host = event.data.host;
   		
       switch (event.data.event) 
@@ -42,17 +42,21 @@ window.addEventListener("load", function() {
   		  case 'load':
   		  	//window.opera.postError(opera.extension.tabs.getFocused() + ' ' + event.source);
         case 'focus':
-  			 startTime = new Date().getTime();
-  			 if (timerInt == null)
-         timerInt = setInterval(timerTick, 1000);
-  			 break;
-  			 // TODO: прерывать таймер на блуре
-  			case 'blur':
-  			 var hostime = (localStorage.getItem(host) != null)? localStorage.getItem(host) : 0;
-         hostime = Number(hostime) + (new Date().getTime() - startTime);
-  			 localStorage.setItem(host, hostime);
+    			 startTime = new Date().getTime();
+    			 theButton.badge.display = 'block';
+    			 if (timerInt == null)
+              timerInt = setInterval(timerTick, 1000);
+    			 break;
   			 
-  			 break;
+  			case 'blur':
+    			 var hostime = (localStorage.getItem(host) != null)? localStorage.getItem(host) : 0;
+           hostime = Number(hostime) + (new Date().getTime() - startTime);
+    			 localStorage.setItem(host, hostime);
+    			 clearInterval(timerInt);
+    			 timerInt = null;
+    			 theButton.badge.display = 'none';
+  			 
+  			    break;
 		  }
 		}
     
@@ -65,4 +69,5 @@ function timerTick()
   var nMin = Math.floor((seconds - (nHour * 3600))/60);
   if (nMin < 10) nMin = '0' + nMin;
   theButton.badge.textContent = nHour + ':'+ nMin;
+      //window.opera.postError('- tick ' + seconds);
 }
