@@ -40,6 +40,12 @@ window.addEventListener("load", function() {
       switch (event.data.event) 
       {
   		  case 'load':
+  		    if (startTime == null) startTime = new Date().getTime();
+  		    if (timerInt == null) {
+            timerInt = setInterval(timerTick, 1000);
+            theButton.badge.display = 'block';
+          }
+          break;
   		  	//window.opera.postError(opera.extension.tabs.getFocused() + ' ' + event.source);
         case 'focus':
     			 startTime = new Date().getTime();
