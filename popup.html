@@ -10,11 +10,12 @@
 	 .numcell { font-size: x-small; }
 	 .hostcell { width: 230px; max-width:230px; overflow:hidden; }
 	 .hostcell a { color: rgb(204,0,0); text-decoration: none;  }
-	 /*.timecell { font-weight: bold; }*/
+	 .timecell { text-align: right; }
 	 table { background-color: rgb(250,250,250); }
 	 .grey { background-color: rgb(230,230,230); }
 	 .white { background-color: rgb(250,250,250); }
 	 #total { position: absolute; right:10px; top: 11px; color: rgb(250,250,250); }
+	 #info { color: rgb(250,250,250); padding: 10px }
   </style>
 	
 	<script type="text/javascript">
@@ -23,8 +24,15 @@
 	
 	function createTable() 
 	{
-	  var sites = storageToArray(), table = '<table>', trclass, site;
-	  var len = (widget.preferences['sites'])? widget.preferences['sites'] : sites.length;
+    if (localStorage.length == 0) {
+      document.getElementById('info').innerHTML = "Visit some sites to see here the list<br />"
+                   + "with its names and the time<br />"
+                   + "you've spent on each one";
+      return; 
+    }
+	  
+    var sites = storageToArray(), table = '<table>', trclass, site;
+	  var len = (widget.preferences['sites'])? parseInt(widget.preferences['sites']) : sites.length;
 	  for (i=0; i < len; i++) 
 	  {        
 		  site = sites[i];
@@ -33,34 +41,33 @@
       table += '<tr class="' + trclass + '"><td class="numcell">' + (1+i) + ': </td><td class="hostcell">' + link(site.host) + '</td><td class="timecell">' + timeString( site.time ) + '</td></tr>'; 
     } 
 		table += '</table>';
-		table += '<div id="total">total time: ' + timeString(totalTime) + '</div>';
+		table += '<div id="total">total: ' + timeString(totalTime) + '</div>';
 	  document.getElementById('holder').innerHTML = table;
 	}
     
     function storageToArray ()
     {
-		var arr = new Array(), key;
-		for (i=0; i < localStorage.length; i++) 
-		{ 
+		    var arr = new Array(), key;
+    		for (i=0; i < localStorage.length; i++) 
+    		{ 
         	try { key = localStorage.key(i); } catch (e) { window.opera.postError("--"+e) } 
         	arr.push( {host:key, time: localStorage.getItem(key)} );
           
-          totalTime += Number(arr[i].time);   
-        	
+          totalTime += Number(arr[i].time);
       	} 
       	return arr.sort(sortTimeDesc);
-	}
-	
-	function sortTimeDesc(a,b) {
-		return b.time - a.time;
-	}
+  	}
+  	
+  	function sortTimeDesc(a,b) {
+  		return b.time - a.time;
+  	}
     
     function link (host)
     {
       return "<a href='http://" + host + "' target='_blank'>" + host + "</a>";
     }
     
-    // bring it out
+    
     function timeString (ms)
     {
   	  seconds = Number (ms)/1000;
@@ -75,8 +82,10 @@
 	</script>
 	
 </head>
-<body onload="createTable()">
-	<h1>OpTimer</h1>
-	<div id='holder'>loading list...</div>
+<body onLoad="createTable()">
+	<h1>Opera Time</h1>
+	<div id='holder'>
+    <div id='info'>Loading...</div>
+  </div>
 </body>
 </html>

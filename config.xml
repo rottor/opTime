@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" id='extensions:opTimer' version="0.8">
-    <name short="opTimer">opTimer</name>
-    <description>Logs the time you spend on each site.</description>
-    <author href="http://haxe.ru">Yuri K</author>
-    <icon src="icons/medium.png"/>
-    <icon src="icons/small.png"/>
-    <icon src="icons/big.png"/>
+<widget xmlns="http://www.w3.org/ns/widgets" id='extensions:opTimer' version="1.01">
+    <name short="opTimer">Opera Time</name>
+    <description>Logs the time you spend on various sites and totally in Opera. Shows the list of hosts you spend most of your time on.</description>
+    <author href="http://haxe.ru">Yuri K</author>    
+    <icon src="icons/icon32.png"/>
+    <icon src="icons/icon22.png"/>
+    <icon src="icons/icon16.png"/>
+    <icon src="icons/icon64.png"/>
     <license>Copyright 2010 Yuri K
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,5 +21,5 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</license>
     
-    <preference name="sites" value="15" />
+    <preference name="sites" value="10" />
 </widget>

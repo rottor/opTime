@@ -2,16 +2,18 @@ var startTime = new Date().getTime();
 var timerInt;
 var theButton;
 
+var tabs = opera.extension.tabs;
+
 window.addEventListener("load", function() {
     
     var toolbar = opera.contexts.toolbar;
     
-    var pop
+    var sites = parseInt(widget.preferences['sites']);
     
     var UIItemProperties = 
     {
         title: "Time Log",
-        icon: "icons/small.png",
+        icon: "icons/icon22.png",
         badge: {
     			textContent: '',
     			backgroundColor: '#d00',
@@ -21,7 +23,7 @@ window.addEventListener("load", function() {
     		popup: {
     			href: "popup.html",
     			width: 250,
-    			height: (widget.preferences['sites'])? widget.preferences['sites']*20+20 : 300
+    			height: (sites)? sites*19+35 : 300
   			},
   			onclick: function() {
   			  clearInterval(timerInt);
@@ -39,32 +41,34 @@ window.addEventListener("load", function() {
   		
       switch (event.data.event) 
       {
-  		  case 'load':
-  		    if (startTime == null) startTime = new Date().getTime();
+  		  case 'load':  		    
   		    if (timerInt == null) {
+  		      startTime = new Date().getTime();
             timerInt = setInterval(timerTick, 1000);
             theButton.badge.display = 'block';
           }
           break;
-  		  	//window.opera.postError(opera.extension.tabs.getFocused() + ' ' + event.source);
+  		  	//window.opera.postError(tabs.getFocused() + ' ' + event.source);
         case 'focus':
-    			 startTime = new Date().getTime();
     			 theButton.badge.display = 'block';
-    			 if (timerInt == null)
+    			 if (timerInt == null) {
+              startTime = new Date().getTime();
               timerInt = setInterval(timerTick, 1000);
+           }
     			 break;
   			 
   			case 'blur':
-    			 var hostime = (localStorage.getItem(host) != null)? localStorage.getItem(host) : 0;
-           hostime = Number(hostime) + (new Date().getTime() - startTime);
-    			 localStorage.setItem(host, hostime);
     			 clearInterval(timerInt);
     			 timerInt = null;
     			 theButton.badge.display = 'none';
+    			 if (host == '') return;
+    			 var hostime = (localStorage.getItem(host) != null)? localStorage.getItem(host) : 0;
+           hostime = Number(hostime) + (new Date().getTime() - startTime);
+    			 localStorage.setItem(host, hostime);
   			 
   			    break;
 		  }
-		}
+		};
     
 }, false);
 
