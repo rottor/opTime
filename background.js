@@ -1,8 +1,10 @@
 var startTime = new Date().getTime(); 
 var timerInt;
+var lastTime;
 var theButton;
 
 var tabs = opera.extension.tabs;
+var extwindow = opera.extension.windows.getFocused();
 
 window.addEventListener("load", function() {
     
@@ -12,7 +14,7 @@ window.addEventListener("load", function() {
     
     var UIItemProperties = 
     {
-        title: "Time Log",
+        title: "Opera Time",
         icon: "icons/icon22.png",
         badge: {
     			textContent: '',
@@ -38,6 +40,7 @@ window.addEventListener("load", function() {
     {
   		//window.opera.postError('Received message: ' + event.data.event + ' ' + event.data.host);
   		var host = event.data.host;
+  		//window.opera.postError(tabs.getFocused().url + ' ' + event.source);
   		
       switch (event.data.event) 
       {
@@ -45,25 +48,34 @@ window.addEventListener("load", function() {
   		    if (timerInt == null) {
   		      startTime = new Date().getTime();
             timerInt = setInterval(timerTick, 1000);
-            theButton.badge.display = 'block';
+            showTimerBadge(host);
           }
           break;
-  		  	//window.opera.postError(tabs.getFocused() + ' ' + event.source);
         case 'focus':
-    			 theButton.badge.display = 'block';
+    			 showTimerBadge(host);
     			 if (timerInt == null) {
               startTime = new Date().getTime();
               timerInt = setInterval(timerTick, 1000);
            }
     			 break;
   			 
-  			case 'blur':
+  			case 'blur':  			   
+  			   lastTime = new Date().getTime() - startTime;
+  			   setTimeout(function() { // отложенная проверка на закрытие неактивного окна
+              if (extwindow.focused && tabs.getFocused() && tabs.getFocused().url.indexOf(host) != -1)
+              {
+                startTimeFrom(lastTime);
+                showTimerBadge(host);
+              }                   
+           }, 500);		
+  			   
     			 clearInterval(timerInt);
     			 timerInt = null;
     			 theButton.badge.display = 'none';
+    			 theButton.title = 'Opera Time is waiting';
     			 if (host == '') return;
     			 var hostime = (localStorage.getItem(host) != null)? localStorage.getItem(host) : 0;
-           hostime = Number(hostime) + (new Date().getTime() - startTime);
+           hostime = Number(hostime) + lastTime;
     			 localStorage.setItem(host, hostime);
   			 
   			    break;
@@ -71,6 +83,22 @@ window.addEventListener("load", function() {
 		};
     
 }, false);
+
+function startTimeFrom(back) 
+{
+  //window.opera.postError( 'startTimeFrom ' + tabs.getFocused().url + extwindow.focused);
+  
+  startTime = new Date().getTime() - back;
+  if (timerInt == null) {
+     timerInt = setInterval(timerTick, 1000);
+  }
+}
+
+function showTimerBadge( host ) 
+{
+  theButton.badge.display = 'block';
+  theButton.title = host || 'OpTime';
+}
 
 function timerTick() 
 {
