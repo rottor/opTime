@@ -7,10 +7,11 @@ var theButton;
 var tabs = opera.extension.tabs;
 var extwindow = opera.extension.windows.getFocused();
 
-window.addEventListener("load", function() {
+window.addEventListener("load", function() 
+{
+    if (localStorage['ext:firstTime'] == undefined) localStorage['ext:firstTime'] = startTime;
     
-    var toolbar = opera.contexts.toolbar;
-    
+    var toolbar = opera.contexts.toolbar;    
     var sites = parseInt(widget.preferences['sites']);
     
     var UIItemProperties = 
@@ -39,15 +40,13 @@ window.addEventListener("load", function() {
     // connecting to popup
     opera.extension.onconnect = function(event){
       event.source.postMessage("bg_connect");
-      opera.postError("sent message to popup");
     }
     
     // Listen for messages from the UserJS. {event:'', host:''}
     opera.extension.onmessage = function(event)
     {
-  		window.opera.postError('Received message: ' + event.data.event + ' ' + event.data.host);
+  		//window.opera.postError('Received message: ' + event.data.event + ' ' + event.data.host);
   		var host = event.data.host;
-  		//window.opera.postError(tabs.getFocused().url + ' ' + event.source);
   		
       switch (event.data.event) 
       {

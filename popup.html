@@ -16,8 +16,9 @@
 	 .white { background-color: rgb(250,250,250); }
 	 #total { position: absolute; right:10px; top: 11px; color: rgb(250,250,250); }
 	 #info { color: rgb(250,250,250); padding: 10px }
-	 #menu { color: rgb(250,250,250); padding: 5px }
-	 input { height: 13px; font-size: x-small; }
+	 #menu { position: absolute; left:5px; bottom: 6px }
+	 #startDate { position: absolute; right:10px; bottom: 6px; color: rgb(250,250,250); font-size: x-small; }
+	 input { height: 15px; font-size: x-small; }
   </style>
 	
 	<script type="text/javascript">
@@ -46,6 +47,9 @@
       return; 
     }
 	  menu.style.display = 'block';
+	  if (storage['ext:firstTime'] == undefined) storage['ext:firstTime'] = new Date().getTime(); 
+	  document.getElementById('startDate').innerHTML = 'since ' + dateString(storage['ext:firstTime']);
+    
     var sites = storageToArray(storage), table = '<table>', trclass, site;
 	  var len = (widget.preferences['sites'])? parseInt(widget.preferences['sites']) : sites.length;
 	  for (i=0; i < len; i++) 
@@ -66,9 +70,10 @@
     		for (i=0; i < storage.length; i++) 
     		{ 
         	try { key = storage.key(i); } catch (e) { window.opera.postError("--"+e) } 
-        	arr.push( {host:key, time: storage[key]} );
-          
-          totalTime += Number(arr[i].time);
+          if (key.indexOf('ext:') != -1) continue;
+            arr.push( {host:key, time: storage[key]} );          
+            totalTime += Number(storage[key]);
+          //}
       	} 
       	return arr.sort(sortTimeDesc);
   	}
@@ -91,6 +96,13 @@
   	  if (nMin < 10) nMin = '0' + nMin;
   	  return nHour + ':'+ nMin;
 	  }
+	  
+	  function dateString (timestamp)
+    {
+      var date = new Date(Number(timestamp));
+      return date.toLocaleDateString();
+      //return '' + date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getYear();
+    }
 	
 	
 	
@@ -103,7 +115,8 @@
     <div id='info'>Loading...</div>
   </div>
   <div id='menu'>
-  <input type="button" onClick="bg.postMessage( {event:'clearAll'} );" value="clear"/>
+    <input type="button" onClick="bg.postMessage( {event:'clearAll'} );" value="Clear all"/>
   </div>
+  <div id='startDate'></div>
 </body>
 </html>
