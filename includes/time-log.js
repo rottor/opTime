@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name Opera Time
+// @name OpTime
 // @author Yuri K.  
-// @version 1.01
+// @version 1.03
 // @description  logs time for each site (host)
-// @ujs:category general: enhancements
-// @ujs:modified 2010-12-21 02:21
+// @ujs:category general: tools
+// @ujs:modified 2010-12-27 23:20
 // ==/UserScript==
 
 window.addEventListener('load', onLoad, false);
@@ -36,11 +36,6 @@ function onUnload (e)
    } 
   catch (e) {  window.opera.postError('- ' + e + ' ' + window.location.hostname); }
   
-}
-
-function trace (e) 
-{
-  opera.extension.postMessage( {event:e.type, host: window.location.hostname} );
 }
 
 

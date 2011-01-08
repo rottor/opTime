@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-	<title>opTimer</title>
+	<title>opTime</title>
 	<meta charset="UTF-8">
 	<style type="text/css" />
 	 html { background-color: rgb(204,0,0); }
@@ -16,22 +16,37 @@
 	 .white { background-color: rgb(250,250,250); }
 	 #total { position: absolute; right:10px; top: 11px; color: rgb(250,250,250); }
 	 #info { color: rgb(250,250,250); padding: 10px }
+	 #menu { color: rgb(250,250,250); padding: 5px }
+	 input { height: 13px; font-size: x-small; }
   </style>
 	
 	<script type="text/javascript">
 	
 	var totalTime = 0;
+	var bg;
 	
-	function createTable() 
+	window.addEventListener("load", function() {
+    opera.extension.onmessage = function(event)
+      {
+       if (event.data == "bg_connect") bg = event.source;
+       if (event.data == "refresh") createTable(localStorage);
+    	}
+  }, false);
+	
+	function createTable(storage) 
 	{
-    if (localStorage.length == 0) {
-      document.getElementById('info').innerHTML = "Visit some sites to see here the list<br />"
+    var holder = document.getElementById('holder');
+    var menu = document.getElementById('menu');
+    if (storage.length == 0) 
+    {
+      holder.innerHTML = "<div id='info'>Visit some sites to see here the list<br />"
                    + "with its names and the time<br />"
-                   + "you've spent on each one";
+                   + "you've spent on each one</div>";
+      menu.style.display = 'none';
       return; 
     }
-	  
-    var sites = storageToArray(), table = '<table>', trclass, site;
+	  menu.style.display = 'block';
+    var sites = storageToArray(storage), table = '<table>', trclass, site;
 	  var len = (widget.preferences['sites'])? parseInt(widget.preferences['sites']) : sites.length;
 	  for (i=0; i < len; i++) 
 	  {        
@@ -41,17 +56,17 @@
       table += '<tr class="' + trclass + '"><td class="numcell">' + (1+i) + ': </td><td class="hostcell">' + link(site.host) + '</td><td class="timecell">' + timeString( site.time ) + '</td></tr>'; 
     } 
 		table += '</table>';
-		table += '<div id="total">total: ' + timeString(totalTime) + '</div>';
+		table += '<div id="total">total time: ' + timeString(totalTime) + '</div>';
 	  document.getElementById('holder').innerHTML = table;
 	}
     
-    function storageToArray ()
+    function storageToArray (storage)
     {
 		    var arr = new Array(), key;
-    		for (i=0; i < localStorage.length; i++) 
+    		for (i=0; i < storage.length; i++) 
     		{ 
-        	try { key = localStorage.key(i); } catch (e) { window.opera.postError("--"+e) } 
-        	arr.push( {host:key, time: localStorage.getItem(key)} );
+        	try { key = storage.key(i); } catch (e) { window.opera.postError("--"+e) } 
+        	arr.push( {host:key, time: storage[key]} );
           
           totalTime += Number(arr[i].time);
       	} 
@@ -82,10 +97,13 @@
 	</script>
 	
 </head>
-<body onLoad="createTable()">
-	<h1>Opera Time</h1>
+<body onLoad="createTable(localStorage)">
+	<h1>OpTime</h1>
 	<div id='holder'>
     <div id='info'>Loading...</div>
+  </div>
+  <div id='menu'>
+  <input type="button" onClick="bg.postMessage( {event:'clearAll'} );" value="clear"/>
   </div>
 </body>
 </html>

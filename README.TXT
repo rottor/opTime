@@ -1,1 +1,1 @@
-OpTime (Opera Time) is extension for Opera browser that logs the time you spend on different sites and totally in Opera.
+OpTime is an extension for Opera browser that logs the time you spend on different sites and totally in Opera.

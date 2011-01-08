@@ -8,7 +8,7 @@
 <body>
   <header>
     <img src="icons/icon64.png">
-    <h1 id="widget-name">Opera Time v1.0-2</h1>
+    <h1 id="widget-name">OpTime v1.0-3</h1>
     <h2>Made by <span id="widget-author">Yuri K</h2>
   </header>
 
@@ -20,19 +20,27 @@
     <h3>Sites to show in the list</h3>
     <fieldset>
       <p>
-        <input id="text1" name="sites" type="text"></input>
+        <input id="text1" name="sites" type="text"/>
         <label for="text1">sites</label>
       </p>
     </fieldset>
-
-
-
-
-
+    
+    <h3>Timer on extension button shows time for...</h3>
+    <fieldset>
+      <p>
+        <input name="timerFor" id="radio2" value="session" type="radio"/>
+        <label for="radio2">Session (for each site during the session (until you close browser)</label>
+      </p>
+      <p>
+        <input name="timerFor" id="radio1" value="tab" type="radio"/>
+        <label for="radio1">Tab (reset timer each time you select new tab)</label>
+      </p>
+    </fieldset>
 
   </section>
 
   <footer>
+    <p><a href="https://addons.opera.com/addons/extensions/details/optime/" target="_blank" title="OpTime">OpTimer extension page</a></p>
     <p>Powered by the Opera Browser</p>
   </footer>
 

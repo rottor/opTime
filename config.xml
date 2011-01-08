@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" id='extensions:opTimer' version="1.0-2">
-    <name short="opTimer">Opera Time</name>
+<widget xmlns="http://www.w3.org/ns/widgets" id='extensions:opTime' version="1.0-4">
+    <name short="opTime">opTime</name>
     <description>Logs the time you spend on various sites and totally in Opera. 
     Shows the list of hosts you spend most of your time on.</description>
     <author href="http://haxe.ru">Yuri K</author>    
