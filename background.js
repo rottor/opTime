@@ -45,15 +45,15 @@ window.addEventListener("load", function()
     // Listen for messages from the UserJS. {event:'', host:''}
     opera.extension.onmessage = function(event)
     {
-  		//window.opera.postError('Received message: ' + event.data.event + ' ' + event.data.host);
+  		window.opera.postError('< message: ' + event.data.event + ' from ' + event.data.host);
   		var host = event.data.host;
   		
       switch (event.data.event) 
       {
   		  case 'load':  		    
-  		    if (timerInt == null) {
+  		    if (timerInt == null) { // возможно и на фокусе стоит делать также
   		      startTime = new Date().getTime();
-  		      sessStartTime = startTime - Number(sessionStorage.getItem(host));
+  		      sessStartTime = startTime - Number(sessionStorage[host] || 0);
             timerInt = setInterval(timerTick, 1000);
             showTimerBadge(host);
           }
@@ -61,7 +61,7 @@ window.addEventListener("load", function()
         case 'focus':
     			 showTimerBadge(host);    			 
            startTimeFrom(0);
-           sessStartTime = startTime - Number(sessionStorage.getItem(host));    			 
+           sessStartTime = startTime - Number(sessionStorage[host] || 0);    			 
     			 break;
   			 
   			case 'blur':  			   
@@ -128,5 +128,5 @@ function timerTick()
   var nMin = Math.floor((seconds - (nHour * 3600))/60);
   if (nMin < 10) nMin = '0' + nMin;
   theButton.badge.textContent = nHour + ':'+ nMin;
-      //window.opera.postError('- tick ' + seconds);
+      window.opera.postError('- tick ' + seconds);
 }

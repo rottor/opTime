@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets" id='extensions:opTime' version="1.1-0">
     <name short="opTime">opTime</name>
-    <description>Logs the time you spend on various sites and totally in Opera. 
+    <description xml:lang="en">Logs the time you spend on various sites and totally in Opera. 
     Shows the list of hosts you spend most of your time on.</description>
+    <description xml:lang="ru">Запоминает, сколько времени вы проводите на различных сайтах и в целом в Опере.
+    Показывает список сайтов на которых вы потратили больше всего времени и таймер на текущем сайте</description>
     <author href="http://haxe.ru">Yuri K</author>    
     <icon src="icons/icon32.png"/>
     <icon src="icons/icon22.png"/>

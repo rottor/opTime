@@ -10,7 +10,7 @@
 window.addEventListener('load', onLoad, false);
 window.addEventListener('focus', onFocus, false);     
 window.addEventListener('blur', onBlur, false);
-window.addEventListener('unload', onUnload, false);
+//window.addEventListener('unload', onUnload, false);
 
 
 
@@ -28,15 +28,15 @@ function onBlur (e)
   catch (e) {  window.opera.postError('- ' + e + ' ' + window.location.hostname); }
   
 }
-
+/*
 function onUnload (e) 
 {
   try { if (window.top.location.hostname != window.location.hostname) return;
        opera.extension.postMessage( {event:'unload', host: window.location.hostname} );
    } 
   catch (e) {  window.opera.postError('- ' + e + ' ' + window.location.hostname); }
-  
 }
+*/
 
 
 function onLoad (e) 
