@@ -50,19 +50,21 @@ window.addEventListener("load", function()
   		
       switch (event.data.event) 
       {
-  		  case 'load':  		    
-  		    if (timerInt == null) { // возможно и на фокусе стоит делать также
-  		      startTime = new Date().getTime();
-  		      sessStartTime = startTime - Number(sessionStorage[host] || 0);
-            timerInt = setInterval(timerTick, 1000);
-            showTimerBadge(host);
-          }
-          break;
-        case 'focus':
-    			 showTimerBadge(host);    			 
-           startTimeFrom(0);
-           sessStartTime = startTime - Number(sessionStorage[host] || 0);    			 
-    			 break;
+		  case 'load':
+		  case 'focus':
+		  if (timerInt == null) { // возможно и на фокусе стоит делать также
+			  startTime = new Date().getTime();
+			  sessStartTime = startTime - Number(sessionStorage[host] || 0);
+			  timerInt = setInterval(timerTick, 1000);
+			  showTimerBadge(host);
+		  }
+		  break;
+		  
+		  
+			//showTimerBadge(host);    			 
+			//startTimeFrom(0);
+			//sessStartTime = startTime - Number(sessionStorage[host] || 0);    			 
+    	  //break;
   			 
   			case 'blur':  			   
   			   lastTime = new Date().getTime() - startTime;
